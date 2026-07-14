@@ -1,3 +1,22 @@
+```
+ _________________________________________
+|                                         |
+|                SQLSKOOL                 |
+|_________________________________________|
+|                                         |
+|   [ ]   [ ]   [ ]   [ ]   [ ]   [ ]     |
+|                                         |
+|   [ ]   [ ]   [ ]   [ ]   [ ]   [ ]     |
+|                                         |
+|                                         |
+|                  _____                  |
+|                 |     |                 |
+|                 | |_| |                 |
+|_________________|_____|_________________|
+          |     |         |     |
+          |_____|         |_____|
+```
+
 # SqlSkool
 
 Most SQL tools show you a final result table. They skip the part that actually teaches you anything: what happened between the query and that table.
