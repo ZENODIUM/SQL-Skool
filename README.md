@@ -1,3 +1,5 @@
+<div align="center">
+
 ```
  _________________________________________
 |                                         |
@@ -19,11 +21,29 @@
 
 # SqlSkool
 
+Teach SQL by watching what each keyword does to real rows.
+
+</div>
+
 Most SQL tools show you a final result table. They skip the part that actually teaches you anything: what happened between the query and that table.
 
 SqlSkool opens that black box. You run a query, then scrub through each keyword (`FROM`, `JOIN`, `WHERE`, `GROUP BY`, `HAVING`, `WITH`, `DISTINCT`, `ORDER BY`, `LIMIT`, subqueries, `UNION`, and more) and watch the intermediate rows change — kept, dropped, matched, NULL-padded, grouped, reordered.
 
 Built as a portfolio project focused on one idea: teach SQL by showing what each keyword does to real data.
+
+## Screenshots
+
+### Gallery
+
+![SqlSkool home gallery with keyword stories](docs/screenshots/home.png)
+
+### Keyword walkthrough
+
+![LEFT JOIN then WHERE trap story with stage pipeline and intermediate tables](docs/screenshots/story-join-trap.png)
+
+### Playground
+
+![Playground editor tracing a LEFT JOIN query stage by stage](docs/screenshots/playground.png)
 
 ## Run it locally
 
@@ -40,6 +60,12 @@ Other useful commands:
 npm test          # engine + curated story checks
 npm run build     # production build
 npm start         # serve the production build
+```
+
+To regenerate screenshots (dev server must be running on port 3000):
+
+```bash
+npm run screenshots
 ```
 
 ## What’s in the app
@@ -80,6 +106,7 @@ src/lib/engine/     # visualize(), planner, stage snapshots
 src/lib/content/    # TableSets + keyword stories
 src/components/viz/ # scrubber, tables, pipeline UI
 src/app/            # gallery, story routes, playground
+docs/screenshots/   # README images
 public/             # sql.js wasm assets (needed in the browser)
 ```
 
