@@ -1,26 +1,52 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #102033;
+  --muted: #5a6b7d;
+  --panel: #f7fafc;
+  --panel-2: #eef3f8;
+  --line: #c5d0dc;
+  --accent: #0d6e6e;
+  --accent-2: #14532d;
+  --keep: #1a7f4b;
+  --drop: #b33a3a;
+  --match: #0b6bcb;
+  --null: #9a6b00;
+  --bg0: #d9e4f0;
+  --bg1: #f3f7fb;
+  --background: var(--bg1);
+  --foreground: var(--ink);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100%;
+  color: var(--ink);
+  background:
+    linear-gradient(180deg, rgb(217 228 240 / 85%), rgb(243 247 251 / 95%)),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 23px,
+      rgb(16 32 51 / 4%) 23px,
+      rgb(16 32 51 / 4%) 24px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 23px,
+      rgb(16 32 51 / 4%) 23px,
+      rgb(16 32 51 / 4%) 24px
+    );
+  font-family: var(--font-sans), "Segoe UI", sans-serif;
+}
+
+a {
+  text-decoration: none;
 }

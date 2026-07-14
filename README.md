@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SqlSkool
 
-## Getting Started
+Most SQL tools show you a final result table. They skip the part that actually teaches you anything: what happened between the query and that table.
 
-First, run the development server:
+SqlSkool opens that black box. You run a query, then scrub through each keyword (`FROM`, `JOIN`, `WHERE`, `GROUP BY`, `HAVING`, `WITH`, `DISTINCT`, `ORDER BY`, `LIMIT`, subqueries, `UNION`, and more) and watch the intermediate rows change — kept, dropped, matched, NULL-padded, grouped, reordered.
+
+Built as a portfolio project focused on one idea: teach SQL by showing what each keyword does to real data.
+
+## Run it locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Other useful commands:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm test          # engine + curated story checks
+npm run build     # production build
+npm start         # serve the production build
+```
 
-## Learn More
+## What’s in the app
 
-To learn more about Next.js, take a look at the following resources:
+- **Gallery** — short keyword walkthroughs on tiny, handcrafted tables
+- **Story pages** — autoplay scrubber, stage pipeline, input vs intermediate tables
+- **Playground** — edit SQL against a curated schema and trace it live
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Content is curated on purpose. The visualizer needs small, intentional datasets (unmatched joins, NULL traps, clean groups). Random tables usually make the story harder, not clearer.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## How the engine works
 
-## Deploy on Vercel
+The core API is schema-agnostic:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```ts
+visualize(tableSet, sql) => stages[]
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Parse the query into a logical stage plan
+2. Run each stage in sql.js (SQLite in WebAssembly)
+3. Emit snapshots + narration for every keyword step
+4. Render them in a scrubbable timeline
+
+Content lives in `src/lib/content`. The engine lives in `src/lib/engine`. Keeping those separate means the same tracer can power curated stories today and custom tables later.
+
+## Stack
+
+- Next.js + TypeScript
+- sql.js (in-browser SQLite)
+- node-sql-parser
+- Monaco editor
+- Framer Motion
+
+## Project layout
+
+```
+src/lib/engine/     # visualize(), planner, stage snapshots
+src/lib/content/    # TableSets + keyword stories
+src/components/viz/ # scrubber, tables, pipeline UI
+src/app/            # gallery, story routes, playground
+public/             # sql.js wasm assets (needed in the browser)
+```
+
+## Notes
+
+After `npm install`, a small postinstall script copies the sql.js wasm files into `public/`. Those files are also committed so a fresh clone can run without surprise missing assets.
+
+This is intentionally narrow. No AI tutor, no big lesson platform yet — just the intermediate-result storytelling piece, done clearly.
